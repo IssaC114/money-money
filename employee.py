@@ -7,8 +7,8 @@ import csv
 class Employee:
     def __init__(self, name, bank, account, password, employee_id):
         self.name = name
-        self.account = account
         self.bank = bank
+        self.account = account
         self.password = password
         self.employee_id = employee_id
 
@@ -24,7 +24,7 @@ class Employee:
     def from_csv_row(cls, row):
         # 從CSV行創建員工物件
         name, bank, account = row
-        password = ""  # 這裡先設為空字串，你可以根據需要自行設定
+        password = ""  # 這裡先設為空字串，在員工系統設定之後可添加
         employee_id = ""  # 同樣設為空字串
         return cls(name, bank, account, password, employee_id)
 
@@ -44,7 +44,7 @@ class EmployeeManagementSystem:
         # 根據員工姓名獲取員工的排班
         pass
 
-# 使用範例
+# 讀取檔案
 ems = EmployeeManagementSystem()
 ems.load_employees_from_csv('employee.csv')
 

@@ -11,7 +11,11 @@ from flask import render_template
 
 @app.route("/")
 def munu():
-    return render_template('menu.html')   
+    return render_template('menu.html')
+
+@app.route("/admin")
+def admin():
+    return render_template('admin.html')   
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=5001,debug=True)
+    app.run(debug=True)

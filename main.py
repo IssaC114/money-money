@@ -10,12 +10,21 @@ from flask import request
 from flask import render_template
 
 @app.route("/")
+@app.route("/menu")
 def munu():
     return render_template('menu.html')
 
 @app.route("/admin")
 def admin():
     return render_template('admin.html')   
+
+@app.route("/employee")
+def employee():
+    return render_template("employee.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

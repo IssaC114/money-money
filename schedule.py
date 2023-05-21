@@ -12,7 +12,7 @@ def read_csv_file(file_path):
             data.append([value for value in row])
     return data
 #!!!
-def getschedulw(name,total):
+def getschedule(name,total):
     
     for i in total:
         if (i[0]=='day') or (i[1]==name):
@@ -21,4 +21,4 @@ def getschedulw(name,total):
 
 file_path='schedule.csv'
 total=read_csv_file(file_path)
-getschedulw('Megan',total)
+getschedule('Megan',total)

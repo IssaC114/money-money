@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    {%include "header.html"%}
+    <p class="text-danger font-weight-bold">！！！只有管理員需要註冊，工讀生請向管理員索取個人帳密！！！</p>
+    <form>
+        <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">帳號ID</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="userid" placeholder="帳號ID">
+                <p class="text-danger font-weight-bold">{{id_duplicate}}</p>
+            </div>
+
+        </div>
+        <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">密碼</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="password" placeholder="請輸入長度>6的字母或數字">
+                <p class="text-danger font-weight-bold">{{pwd_short}}</p>
+            </div>
+        </div>
+
+        </div>
+        <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">確認密碼</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="password" placeholder="確認密碼">
+                <p class="text-danger font-weight-bold">{{pwd_wrong}}</p>
+            </div>
+        </div>
+        <div class="col-sm-10 offset-sm-2">
+            <ul class="nav">
+                <li class="nav-item">
+                    <button type="submit" class="btn btn-primary">登入</button>
+                </li>
+            </ul>
+    </form>
+</body>
+
+</html>

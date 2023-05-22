@@ -53,11 +53,6 @@ app = Flask(__name__)
 from flask import request
 from flask import render_template
 
-@app.route("/")
-@app.route("/menu")
-def munu():
-    return render_template('menu.html')
-
 @app.route("/admin")
 def admin():
     return render_template('admin.html')   
@@ -66,7 +61,8 @@ def admin():
 def employee():
     return render_template("employee.html")
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/login')
 def login():
     if request.method == 'POST':
         # 獲取從表單提交的帳號和密碼
@@ -75,7 +71,6 @@ def login():
 
         # 假設您有一個函式或資料庫來驗證帳號和密碼
         user_role = validate_credentials(username, password)
-
         if user_role == 'admin':
             # 登入成功，導向管理員網頁
             return render_template('admin.html')
@@ -110,8 +105,10 @@ def validate_credentials(username, password):
 
     return None
 
+@app.route("/signout")
+def signout():
+    return render_template("signout.html")
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-#>>>>>>> 10cbd42fe61a4b3593d4a9833cf56db68badbb5c

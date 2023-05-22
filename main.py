@@ -3,7 +3,6 @@
 負責組員：李湘菱（主要架構）、周詠熙（html與flask框架整合）
 """
 
-#<<<<<<< HEAD
 #最開始的系統介面
 def showstartmenu():
     
@@ -49,10 +48,8 @@ def showadminmenu():
         except ValueError:
             print("請輸入整數\n ")
 
-#=======
-from flask import Flask, make_response
+from flask import Flask, make_response, redirect
 app = Flask(__name__)
-
 from flask import request
 from flask import render_template
 
@@ -69,9 +66,51 @@ def admin():
 def employee():
     return render_template("employee.html")
 
-@app.route("/login")
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    if request.method == 'POST':
+        # 獲取從表單提交的帳號和密碼
+        username = request.form['username']
+        password = request.form['password']
+
+        # 假設您有一個函式或資料庫來驗證帳號和密碼
+        user_role = validate_credentials(username, password)
+
+        if user_role == 'admin':
+            # 登入成功，導向管理員網頁
+            return render_template('admin.html')
+        elif user_role == 'employee':
+            # 登入成功，導向工讀生網頁
+            return render_template('employee.html')
+        else:
+            # 登入失敗，重新導向登入頁面或顯示錯誤訊息
+            error = "帳號id或密碼錯誤，請重新輸入"
+            return render_template('login.html', error = error)
+    else:
+        # GET 請求，顯示登入頁面
+        return render_template('login.html')
+
+
+def validate_credentials(username, password):
+    # 假設您的使用者資料儲存在字典中
+    user_data = {
+        'admin': {
+            'password': 'adminpassword',
+            'role': 'admin'
+        },
+        'employee': {
+            'password': 'employeepassword',
+            'role': 'employee'
+        }
+    }
+
+    if username in user_data:
+        if password == user_data[username]['password']:
+            return user_data[username]['role']
+
+    return None
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

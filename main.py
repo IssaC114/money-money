@@ -6,6 +6,13 @@
 from flask import Flask, make_response, redirect,request,render_template
 app = Flask(__name__)
 
+#基本的帳密設定
+def validate_credentials(username, password):
+    if username == "test" and password == "1234":
+        return True
+    else:
+        return False
+    
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login')
 # 獲取從表單提交的帳號和密碼後判斷是否正確
@@ -29,12 +36,7 @@ def login():
         return admin()
     return render_template('login.html')
 
-#基本的帳密設定
-def validate_credentials(username, password):
-    if username == "test" and password == "1234":
-        return True
-    else:
-        return False
+
 
 #admin介面
 @app.route("/admin",methods=['GET','POST'])

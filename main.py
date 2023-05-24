@@ -4,11 +4,10 @@
 """
 
 import csv
-from flask import Flask
+from flask import Flask, redirect
 from flask import make_response,request
 from flask import render_template, send_file
 from money import MoneyCalculator
-from employee import EmployeeManage
 import pandas as pd
 app = Flask(__name__)
 
@@ -24,7 +23,7 @@ def validate_credentials(username, password):
 # 獲取從表單提交的帳號和密碼後判斷是否正確
 #再將其連結至admin介面
 def login():
-    username = request.cookies.get('username')
+    user = request.cookies.get('username')
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -39,9 +38,22 @@ def login():
             return render_template('login.html',
                                    error=error)
         # GET 請求，顯示登入頁面
-    elif username:
+    elif user:
         return render_template('admin.html')
-    #return render_template('login.html')
+
+    
+@app.route('/logout', methods=['GET'])
+def logout():
+    # 獲取要清除的 Cookie 名稱
+    cookie_name = request.cookies.get('username')
+    if cookie_name:
+        # 清除指定的 Cookie
+        response = make_response(redirect('/'))
+        response.delete_cookie(cookie_name)
+        return response
+
+    # 導向登出頁面或其他處理
+    return redirect('/')
 
 #admin介面
 @app.route("/admin",methods=['GET','POST'])
@@ -104,6 +116,7 @@ def schedule_now():
 @app.route('/admin/arrange',methods=['GET'])
 def download_wages_total():
     return send_file(MoneyCalculator.export_salary_to_csv(),as_attachment=True)
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

@@ -1,3 +1,10 @@
+
+""" 
+目的：員工個人資料與其班表歸類
+負責組員：
+"""
+import csv
+
 import schedule
 '''  物件(但真的有需要嗎)
 class Employee:

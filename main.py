@@ -40,6 +40,7 @@ def login():
         # GET 請求，顯示登入頁面
     elif user:
         return render_template('admin.html')
+    return render_template('login.html')
 
     
 @app.route('/logout', methods=['GET'])

@@ -32,6 +32,12 @@ def getschedule(name=None):
                 writer.writerow(row)
         
 
+def getverify():
+    getschedule()
+    data=read_csv_file('uploaded_schedule.csv')
+    name=[row[1] for row in data]
+    return name
+
 
 
 

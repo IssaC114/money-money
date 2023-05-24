@@ -89,11 +89,9 @@ def download_schedule():
     # 下載模板schedule.csv
     return send_file('schedule_template.csv', as_attachment=True)
 
-@app.route('admin/schedule')
+@app.route('/admin/schedule',methods=['GET'])
 def schedule_now():
-    with open("uploaded_schedule.csv",mode="r",encoding="utf-8") as schedule:
-        reader = csv.reader(schedule)
-    
+    return send_file('uploaded_schedule.csv',as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

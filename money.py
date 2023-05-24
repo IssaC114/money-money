@@ -4,76 +4,42 @@
 """
 
 import csv
-from employee import Employee
+from employee import Employee, EmployeeManagementSystem
 import schedule
 
 class MoneyCalculator:
-    wages = 176
-#     def __init__(self, employee_file, schedule_file):
-#         self.employees = self.load_employees(employee_file)
-#         self.schedule = schedule.read_csv_file(schedule_file)
+    wages = 176 # 基本薪資
 
-#     def load_employees(self, employee_file):
-#         employees = []
-#         with open(employee_file, 'r') as file:
-#             reader = csv.reader(file)
-#             next(reader)  # 跳過標題行
-#             for row in reader:
-#                 employee = Employee.from_csv_row(row)
-#                 employees.append(employee)
-#         return employees
-
-#     def set_wages(self, name, wages):
-#         for employee in self.employees:
-#             if employee.name == name:
-#                 employee.wages = wages
-#                 break
-    
     @classmethod
-    def set_wages_total(cls,wages):
+    def set_wages_total(cls, wages):
         if wages >= cls.wages:
             cls.wages = wages
 
-    # def calculate_total_wages(self):
-    #     total_wages = 0
-    #     for employee in self.employees:
-    #         total_wages += employee.total_wages()
-    #     return total_wages
+def calculate_salary(employee, schedule_file):
+    data = schedule.read_csv_file(schedule_file)
+    total_working_days = 0
+    total_work_hours = 0
+    for row in data:
+        if row[1] == employee.name:
+            total_working_days += 1
+            total_work_hours += float(row[3]) - float(row[2]) # end-start
+    total_working_days *= 4  # 乘以四週（表一個月）
+    total_work_hours *= 4  # 乘以四週（表一個月）
+    total_salary = total_work_hours * MoneyCalculator.wages
+    return total_salary, total_working_days, total_work_hours
 
-#     def calculate_money(self):
-#         for employee in self.employees:
-#             working_days = 0
-#             for entry in self.schedule:
-#                 if entry[1] == employee.name:
-#                     if entry[0] == 'day':
-#                         working_days += 1
-#                     elif entry[0] == 'overtime':
-#                         working_days += 1
-#                         employee.add_extra_wages(100)  # 假設加班每天額外薪資為100元
-#                     elif entry[0] == 'substitute':
-#                         employee.add_extra_wages(200)  # 假設代班每天額外薪資為200元
-#                     elif entry[0] == 'holiday':
-#                         working_days += 1
-#                         employee.double_wages()  # 假設假日出勤薪水雙倍
-#                     elif entry[0] == 'hours':
-#                         working_days += float(entry[2])  # 讀取工作時數
-#             employee.calculate_wages(working_days)
+def export_salary_to_csv(employees, output_file):
+    with open(output_file, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['姓名', '本月總薪資', '月工作天數', '月工作時數'])
+        for employee in employees:
+            salary, working_days, work_hours = calculate_salary(employee, 'uploaded_schedule.csv')
+            writer.writerow([employee.name, salary, working_days, work_hours])
 
-# # 讀檔
-# money_calculator = MoneyCalculator('employee.csv', 'schedule.csv')
+# 讀取檔案
+ems = EmployeeManagementSystem()
+ems.load_employees_from_csv('employee.csv')
 
-# # 設定薪水
-# money_calculator.set_wages('Megan', 50000)
-# money_calculator.set_wages('Fannie', 60000)
-# money_calculator.set_wages('Quinella', 55000)
-# money_calculator.set_wages('Luminous', 70000)
-# money_calculator.set_wages('Frank', 45000)
+# 計算薪資並導出到CSV
+export_salary_to_csv(ems.employees, 'salary_output.csv')
 
-# # 計算總薪資
-# total_wages = money_calculator.calculate_total_wages()
-# print(f"Total wages: {total_wages}")
-
-# # 計算各員工的薪水
-# money_calculator.calculate_money()
-# for employee in money_calculator.employees:
-#     print(f"Name: {employee.name}, Wages: {employee.wages}")

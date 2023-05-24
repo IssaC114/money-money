@@ -25,7 +25,7 @@ def gettotaltime(name):
 #如果參數有給名字就輸出此人的班表，沒有就輸出整份班表
 def getschedule(name=None):
     totaldata=read_csv_file('uploaded_schedule.csv')
-    with open(totaldata,'w',newline='')as file:
+    with open('schedule.csv','w',newline='')as file:
         writer=csv.writer(file)
         for row in totaldata:
             if name is None or row[1]==name or row==totaldata[0]:

@@ -8,6 +8,7 @@ from flask import Flask
 from flask import make_response,request
 from flask import render_template, send_file
 from money import MoneyCalculator
+from employee import EmployeeManage
 import pandas as pd
 app = Flask(__name__)
 
@@ -99,6 +100,10 @@ def download_schedule():
 def schedule_now():
     return send_file('uploaded_schedule.csv',
                      as_attachment=True)
+    
+@app.route('/admin/arrange',methods=['GET'])
+def download_wages_total():
+    return send_file(MoneyCalculator.export_salary_to_csv(),as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

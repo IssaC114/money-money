@@ -22,7 +22,7 @@ def validate_credentials(username, password):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login')
 # 獲取從表單提交的帳號和密碼後判斷是否正確
-#再將其連結至admin介面
+# 再將其連結至admin介面
 def login():
     username = request.cookies.get('username')
     if request.method == 'POST':

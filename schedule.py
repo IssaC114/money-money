@@ -14,9 +14,9 @@ def read_csv_file(file_path):
     return data
 
 #得到某人的總時數
-def gettotaltime(name,totalschedule):
+def gettotaltime(name):
     totaltime=0
-    for i in totalschedule:
+    for i in totaldata:
         if (i[1]==name):
             totaltime+=i[3]-i[2]
     return totaltime

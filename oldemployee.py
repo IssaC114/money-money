@@ -31,7 +31,7 @@ class Employee:
     
     def get_schedule(self, schedule_file):
         data = schedule.read_csv_file(schedule_file)
-        schedule.getschedule(self.name, data)
+        schedule.getschedule(self.name)
 
 class EmployeeManagementSystem:
     def __init__(self):

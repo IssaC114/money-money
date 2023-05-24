@@ -51,7 +51,6 @@ def logout():
         response = make_response(redirect('/'))
         response.delete_cookie(cookie_name)
         return response
-
     # 導向登出頁面或其他處理
     return redirect('/')
 

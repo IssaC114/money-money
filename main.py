@@ -1,11 +1,12 @@
 """ 
-目的：主函式撰寫
-負責組員：周詠熙（主要架構與html撰寫）、李湘菱（從旁協助與部分函式撰寫）
+目的：主函式撰、與html進行連接
+負責組員：周詠熙（主要架構與html撰寫）
 """
 
 import csv
 from flask import Flask
-from flask import make_response, request,render_template, send_file
+from flask import make_response,request
+from flask import render_template, send_file
 from money import MoneyCalculator
 import pandas as pd
 app = Flask(__name__)
@@ -29,7 +30,8 @@ def login():
         if validate_credentials(username,password):
             # 建立cookies
             response = make_response(username)
-            response.set_cookie('username', username)
+            response.set_cookie('username', 
+                                username)
             return response
         else:
             error = "帳號或密碼錯誤，請重新輸入"
@@ -39,8 +41,6 @@ def login():
     elif username:
         return render_template('admin.html')
     #return render_template('login.html')
-
-
 
 #admin介面
 @app.route("/admin",methods=['GET','POST'])
@@ -74,24 +74,31 @@ def upload_schedule():
             # 處理CSV文件，這裡只是讀取CSV文件的內容並返回給前端
             df = pd.read_csv('uploaded_schedule.csv')
             if not df.empty:
-                return render_template('upload.html', data=df.to_html(index=False), success=True)
+                return render_template('upload.html', 
+                                       data=df.to_html(index=False), 
+                                       success=True)
             else:
                 error = '上傳的CSV文件為空'
-                return render_template('upload.html', error=error)
+                return render_template('upload.html', 
+                                       error=error)
         else:
             error = '上傳的文件必須是CSV格式'
-            return render_template('upload.html', error=error)
+            return render_template('upload.html', 
+                                   error=error)
 
     return render_template('upload.html')
 
 @app.route('/admin/upload/download', methods=['GET'])
 def download_schedule():
     # 下載模板schedule.csv
-    return send_file('schedule_template.csv', as_attachment=True)
+    return send_file('schedule_template.csv', 
+                     as_attachment=True)
 
 @app.route('/admin/schedule',methods=['GET'])
+#下載目前班表
 def schedule_now():
-    return send_file('uploaded_schedule.csv',as_attachment=True)
+    return send_file('uploaded_schedule.csv',
+                     as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

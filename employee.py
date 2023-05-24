@@ -1,6 +1,6 @@
 """ 
 目的：員工個人資料與其班表歸類
-負責組員：李湘菱
+負責組員：
 """
 import csv
 import schedule

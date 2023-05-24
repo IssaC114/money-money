@@ -4,6 +4,7 @@
 """
 import csv
 
+#讀檔並轉二維陣列
 def read_csv_file(file_path):
     data=[]
     with open(file_path,'r') as file:
@@ -11,14 +12,24 @@ def read_csv_file(file_path):
         for row in csv_reader:
             data.append([value for value in row])
     return data
-#!!!
-def getschedule(name,total):
-    
-    for i in total:
-        if (i[0]=='day') or (i[1]==name):
-            print(i[0],i[1],i[2],i[3],sep="   ")
+
+#得到某人的總時數
+def gettotaltime(name,totalschedule):
+    totaltime=0
+    for i in totalschedule:
+        if (i[1]==name):
+            totaltime+=i[3]-i[2]
+    return totaltime
+
+#如果參數有給名字就輸出此人的班表，沒有就輸出整份班表
+def getschedule(filename,totalschedule,name=None):
+    with open(filename,'w',newline='')as file:
+        writer=csv.writer(file)
+        for row in totalschedule:
+            if name is None or row[1]==name or row==totalschedule[0]:
+                writer.writerow(row)
         
 
-# file_path='uploaded_schedule.csv'
-# total=read_csv_file(file_path)
-# getschedule('Megan',total)
+file_path='uploaded_schedule.csv'
+totaldata=read_csv_file(file_path)
+

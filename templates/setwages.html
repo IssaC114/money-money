@@ -8,10 +8,12 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 {% include "header.html" %}
+<form method='POST' action="/admin/wages">
 <nav class="nav flex-column">
-  <a class="nav-link" href="admin/schedule">查看目前班表</a>
-  <a class="nav-link" href="admin/upload">上傳新的班表</a>
-  <a class="nav-link" href="#!">下載彙整後的工讀金工讀金</a>
-  <a class="nav-link" href="admin/wages">設定基本薪資</a>
+  <input class="text" class="form -control" name="wages" placeholder="請輸入≧176的數字">
+  <button type="submit" class="btn btn-primary">確定</button>
+  <p class="text-danger">{{error}}</p>
+  <p class="text-success">{{success}}</p>
 </nav>
+</form>
 </html>

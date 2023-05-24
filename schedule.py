@@ -19,6 +19,6 @@ def getschedule(name,total):
             print(i[0],i[1],i[2],i[3],sep="   ")
         
 
-file_path='schedule.csv'
-total=read_csv_file(file_path)
-getschedule('Megan',total)
+# file_path='uploaded_schedule.csv'
+# total=read_csv_file(file_path)
+# getschedule('Megan',total)

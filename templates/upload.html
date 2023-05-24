@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+{% include "header.html" %}
+
+<form action="/admin/upload/download" method="GET">
+    <button type="submit">下載模板</button>
+</form>
+
+<form action="/admin/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv">
+    <button type="submit">上傳</button>
+    {% if data %}
+    <h2>上傳的CSV文件內容：</h2>
+    {{ data|safe }}
+    {% endif %}
+
+    {% if error %}
+        <p class="text-danger">{{ error }}</p>
+    {% endif %}
+</form>
+      
+</nav>
+</html>

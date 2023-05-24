@@ -56,5 +56,5 @@ ems.load_employees_from_csv('employee.csv')
 # 獲取員工列表
 for employee in ems.employees:
     print(f"Name: {employee.name}, Account: {employee.account}, Bank: {employee.bank}")
-    employee.get_schedule('schedule.csv')
+    employee.get_schedule('uploaded_schedule.csv')
 

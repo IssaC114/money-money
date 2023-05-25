@@ -9,6 +9,7 @@ from flask import make_response,request
 from flask import render_template, send_file
 from money import MoneyCalculator
 import pandas as pd
+import schedule
 app = Flask(__name__)
 
 #基本的帳密設定
@@ -60,29 +61,42 @@ def logout():
 def admin():
     return render_template('admin.html')
 
-@app.route("/admin/settings")
-#設定介面
-def settings():
-    return render_template('settings.html')
-
-@app.route("/admin/wages",methods=['GET','POST'])
+@app.route("/admin/settings",methods=['GET','POST'])
 #薪資設定頁面
 def set_wages():
     if request.method=="POST":
         wages=int(request.form['wages'])
-        if wages >= MoneyCalculator.wages:
+        if wages >= 176:
             MoneyCalculator.set_wages_total(wages)
-            success = "薪資更新成功！"
-            return render_template('setwages.html',
-                                   success=success)           
+            success = f"薪資更新成功！目前薪資為{wages}"
+            return render_template('settings.html',
+                                   success_1=success)           
         else:
             error="輸入值小於基本薪資，更新失敗"
-            return render_template('setwages.html',
-                                   error=error)
-    return render_template('setwages.html')
+            return render_template('settings.html',
+                                   error_1=error)
+    return render_template('settings.html')
 
-@app.route("/admin/settings/holiday",methods=['GET','POST'])
+@app.route("/admin/settings",methods=['GET','POST'])
 def set_holiday():
+    if request.method=='POST':
+        holiday = request.form['holiday']
+        if holiday == 'y' or 'Y':
+            work = True
+            schedule.tickholiday(work)
+            success="目前計算模式：國定假日上班"
+            return render_template('holiday.html',
+                                   success_2=success)
+        elif holiday == 'n' or 'N':
+            work = False
+            schedule.tickholiday(work)
+            success="目前計算模式：國定假日不上班"
+            return render_template('holiday.html',
+                                   success_2=success)
+        else:
+            error = "錯誤：請輸入字母Y或N來進行調整"
+            return render_template('holiday.html',
+                                   error_2=error)                                   
     return render_template('holidays.html')
 
 @app.route('/admin/upload', methods=['GET', 'POST'])

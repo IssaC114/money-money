@@ -6,12 +6,11 @@ import csv
 import datetime
 class scheduleclass:
 
-    def __init__(self,file_path):
-        self.file_path = file_path
-        self.totaldata = self.read_csv_file(file_path)
+    def __init__(self):
+        self.totaldata = self.read_csv_file()
         self.target_month = None
         self.target_year = None
-        self.holidayboolean = True
+        self.holidayboolean = False
 
     def settarget(self,target_month,target_year):
         self.target_month = target_month
@@ -23,7 +22,7 @@ class scheduleclass:
     #讀檔並轉二維陣列
     def read_csv_file(self):
         data=[]
-        with open(self.file_path,'r') as file:
+        with open('uploaded_schedule.csv','r') as file:
             csv_reader=csv.reader(file)
             for row in csv_reader:
                 data.append([value for value in row])
@@ -73,18 +72,19 @@ class scheduleclass:
             if employee == 'name' :
                 continue
             
-            if employee not in total_hours:
-                total_hours[employee] = 0
-        
-            hours = 0
+            if employee not in weekday_hours:
+                weekday_hours[employee] = 0
 
+            if employee not in holiday_hours:
+                holiday_hours[employee] = 0
+        
+            weekdayhours = 0
+            holidayhours = 0
             for date in all_dates:
                 day = date.strftime("%A")
 
                 if day == employee_schedule[0]:
-                    if (date.date() in holidays) or (self.holidayboolean==False):
-                        continue
-
+                   
                     if date == datetime.datetime.now() and date.month == current_month and date.year == current_year:
                         # 若為當前日期，計算到目前時間的工作時數
                         start_time = datetime.datetime(date.year , date.month , date.day , float(employee_schedule[2]))
@@ -95,10 +95,22 @@ class scheduleclass:
                         # 非當前日期，計算整天的工作時數
                         working_hours = float(employee_schedule[3]) - float(employee_schedule[2])
 
-                    hours += working_hours
+                    if (date.date() in holidays) and (self.holidayboolean):
+                        holidayhours += working_hours
+                    else:
+                        weekdayhours += working_hours
 
-            total_hours[employee] += hours
+            weekday_hours[employee] += weekdayhours
+            holiday_hours[employee] += holidayhours
 
-        return total_hours
+        return weekday_hours , holiday_hours
+    
+
+sc = scheduleclass()
+sc.settarget(5,2023)
+sc.sethoildaybool(True)
+wehours , hohours = sc.calculate_total_hours()
+print(wehours)
+print(hohours)
         
     

@@ -4,7 +4,7 @@
 """
 import csv
 import datetime
-class schedule:
+class scheduleclass:
 
     def __init__(self,file_path,target_month,target_year):
         self.file_path = 'uploaded_schedule.csv'

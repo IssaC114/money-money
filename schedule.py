@@ -6,11 +6,19 @@ import csv
 import datetime
 class scheduleclass:
 
-    def __init__(self,file_path,target_month,target_year):
+    def __init__(self,file_path):
         self.file_path = file_path
         self.totaldata = self.read_csv_file(file_path)
+        self.target_month = None
+        self.target_year = None
+        self.holidayboolean = True
+
+    def settarget(self,target_month,target_year):
         self.target_month = target_month
         self.target_year = target_year
+
+    def sethoildaybool(self , hoildaybool):
+        self.holidayboolean = hoildaybool
 
     #讀檔並轉二維陣列
     def read_csv_file(self):
@@ -56,8 +64,8 @@ class scheduleclass:
                 holidays.append(holiday_date)
 
         #計算員工總時數
-        total_hours = {}
-
+        weekday_hours = {}
+        holiday_hours={}
         for employee_schedule in self.totaldata:    
             
             employee = employee_schedule[1]
@@ -74,7 +82,7 @@ class scheduleclass:
                 day = date.strftime("%A")
 
                 if day == employee_schedule[0]:
-                    if date.date() in holidays:
+                    if (date.date() in holidays) or (self.holidayboolean==False):
                         continue
 
                     if date == datetime.datetime.now() and date.month == current_month and date.year == current_year:

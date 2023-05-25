@@ -7,7 +7,7 @@ import datetime
 class scheduleclass:
 
     def __init__(self,file_path,target_month,target_year):
-        self.file_path = 'uploaded_schedule.csv'
+        self.file_path = file_path
         self.totaldata = self.read_csv_file(file_path)
         self.target_month = target_month
         self.target_year = target_year

@@ -86,7 +86,11 @@ def calculate_total_hours(target_month , target_year):
                 hours += working_hours
 
         total_hours[employee] += hours
-        
+
     return total_hours
     
-print(calculate_total_hours(5,2023))
+def tickholiday(tick):
+    if tick :
+        return True
+    else:
+        return False

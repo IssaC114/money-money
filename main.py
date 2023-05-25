@@ -8,9 +8,13 @@ from flask import Flask, redirect
 from flask import make_response,request
 from flask import render_template, send_file
 from money import MoneyCalculator
+from schedule import scheduleclass
 import pandas as pd
 import schedule
+
 app = Flask(__name__)
+cal_money = MoneyCalculator()
+sch = scheduleclass()
 
 #基本的帳密設定
 def validate_credentials(username, password):
@@ -67,7 +71,7 @@ def set_wages():
     if request.method=="POST":
         wages=int(request.form['wages'])
         if wages >= 176:
-            MoneyCalculator.set_wages_total(wages)
+            cal_money.set_wages_total(wages)
             success = f"薪資更新成功！目前薪資為{wages}"
             return render_template('settings.html',
                                    success_1=success)           
@@ -138,7 +142,7 @@ def schedule_now():
     
 @app.route('/admin/arrange',methods=['GET'])
 def download_wages_total():
-    return send_file(MoneyCalculator.export_salary_to_csv(),as_attachment=True)
+    return send_file(cal_money.export_salary_to_csv(),as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

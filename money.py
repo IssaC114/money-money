@@ -5,10 +5,11 @@
 
 import csv
 from oldemployee import Employee, EmployeeManagementSystem
-import schedule
+from schedule import scheduleclass
 
 class MoneyCalculator:
     wages = 176 # 基本薪資
+    class_schedule = scheduleclass('uploaded_schedule.csv',5,2023)
 
     @staticmethod
     def is_holiday(date, holidays):
@@ -32,7 +33,7 @@ class MoneyCalculator:
         return holidays
 
     def count_working_days(schedule_file, holidays):
-        data = schedule.read_csv_file(schedule_file)
+        data = scheduleclass.read_csv_file()
         working_days = 0
         for row in data:
             date = row[0]
@@ -41,7 +42,7 @@ class MoneyCalculator:
         return working_days
 
     def calculate_salary(employee, schedule_file, holidays):
-        data = schedule.read_csv_file(schedule_file)
+        data = scheduleclass.read_csv_file()
         working_days = 0
         work_hours = 0
         for row in data:

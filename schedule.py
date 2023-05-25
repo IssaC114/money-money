@@ -14,14 +14,6 @@ def read_csv_file(file_path):
             data.append([value for value in row])
     return data
 
-#得到某人的總時數
-def gettotaltime(name):
-    totaltime=0
-    totaldata=read_csv_file('uploaded_schedule.csv')
-    for i in totaldata:
-        if (i[1]==name):
-            totaltime+=int(i[3])-int(i[2])
-    return totaltime
 
 #如果參數有給名字就輸出此人的班表，沒有就輸出整份班表
 def getschedule(name=None):

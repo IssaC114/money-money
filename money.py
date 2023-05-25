@@ -4,7 +4,6 @@
 """
 
 import csv
-from datetime import datetime
 from oldemployee import Employee, EmployeeManagementSystem
 import schedule
 
@@ -20,11 +19,6 @@ class MoneyCalculator:
     def set_wages_total(cls, wages):
         if wages >= cls.wages:
             cls.wages = wages
-
-    @staticmethod
-    def get_current_month():
-        today = datetime.now()
-        return today.strftime('%Y-%m')
 
     @staticmethod
     def load_holidays(file_path):
@@ -71,9 +65,6 @@ class MoneyCalculator:
 # 讀取檔案
 ems = EmployeeManagementSystem()
 ems.load_employees_from_csv('employee.csv')
-
-# 現實日期時間
-current_month = MoneyCalculator.get_current_month()
 
 # 讀取國定假日
 holidays = MoneyCalculator.load_holidays('holidays.csv')

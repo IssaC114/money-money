@@ -16,8 +16,10 @@ class scheduleclass:
         self.target_month = target_month
         self.target_year = target_year
 
+
     def sethoildaybool(self , hoildaybool):
         self.holidayboolean = hoildaybool
+
 
     #讀檔並轉二維陣列
     def read_csv_file(self):
@@ -27,6 +29,7 @@ class scheduleclass:
             for row in csv_reader:
                 data.append([value for value in row])
         return data
+
 
     #如果參數有給名字就輸出此人的班表，沒有就輸出整份班表
     def getschedule(self,name=None):

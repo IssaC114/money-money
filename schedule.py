@@ -14,15 +14,6 @@ def read_csv_file(file_path):
             data.append([value for value in row])
     return data
 
-#得到某人的總時數
-def gettotaltime(name):
-    totaltime=0
-    totaldata=read_csv_file('uploaded_schedule.csv')
-    for i in totaldata:
-        if (i[1]==name):
-            totaltime+=int(i[3])-int(i[2])
-    return totaltime
-
 #如果參數有給名字就輸出此人的班表，沒有就輸出整份班表
 def getschedule(name=None):
     totaldata=read_csv_file('uploaded_schedule.csv')
@@ -31,14 +22,15 @@ def getschedule(name=None):
         for row in totaldata:
             if name is None or row[1]==name or row==totaldata[0]:
                 writer.writerow(row)
-        
 
+#用來帳密驗證    
 def getverify():
     getschedule()
     data=read_csv_file('uploaded_schedule.csv')
     name=[row[1] for row in data]
     return name
 
+#計算每個人某年某月總薪資
 def calculate_total_hours(target_month , target_year):
     #取現實年月
     current_month = datetime.datetime.now().month
@@ -50,13 +42,25 @@ def calculate_total_hours(target_month , target_year):
     last_day = next_month - datetime.timedelta(days = 1)
     all_dates = [first_day + datetime.timedelta(days=x) for x in range((last_day - first_day).days + 1)]
 
+     # 讀取國定假日資訊
+    holidays = []
+    with open('holidays.csv', 'r') as file:
+        reader = csv.reader(file)
+        next(reader)  # 跳過標題列
+        for row in reader:
+            holiday_date = datetime.datetime.strptime(row[0], "%Y-%m-%d").date()
+            holidays.append(holiday_date)
+
+    #計算員工總時數
     total_hours = {}
 
     for employee_schedule in read_csv_file('uploaded_schedule.csv'):
         
         employee = employee_schedule[1]
+        #跳過標題列
         if employee == 'name' :
             continue
+        
         if employee not in total_hours:
             total_hours[employee] = 0
     
@@ -66,7 +70,11 @@ def calculate_total_hours(target_month , target_year):
             day = date.strftime("%A")
 
             if day == employee_schedule[0]:
+                if date.date() in holidays:
+                    continue
+
                 if date == datetime.datetime.now() and date.month == current_month and date.year == current_year:
+                    # 若為當前日期，計算到目前時間的工作時數
                     start_time = datetime.datetime(date.year , date.month , date.day , float(employee_schedule[2]))
                     end_time = datetime.datetime.now()
                     diff = end_time - start_time
@@ -78,5 +86,7 @@ def calculate_total_hours(target_month , target_year):
                 hours += working_hours
 
         total_hours[employee] += hours
+        
     return total_hours
-
+    
+print(calculate_total_hours(5,2023))

@@ -60,6 +60,11 @@ def logout():
 def admin():
     return render_template('admin.html')
 
+@app.route("/admin/settings")
+#設定介面
+def settings():
+    return render_template('settings.html')
+
 @app.route("/admin/wages",methods=['GET','POST'])
 #薪資設定頁面
 def set_wages():
@@ -75,6 +80,10 @@ def set_wages():
             return render_template('setwages.html',
                                    error=error)
     return render_template('setwages.html')
+
+@app.route("/admin/settings/holiday",methods=['GET','POST'])
+def set_holiday():
+    return render_template('holidays.html')
 
 @app.route('/admin/upload', methods=['GET', 'POST'])
 def upload_schedule():
@@ -116,7 +125,6 @@ def schedule_now():
 @app.route('/admin/arrange',methods=['GET'])
 def download_wages_total():
     return send_file(MoneyCalculator.export_salary_to_csv(),as_attachment=True)
-
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

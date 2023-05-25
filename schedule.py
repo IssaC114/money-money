@@ -89,3 +89,8 @@ def calculate_total_hours(target_month , target_year):
 
     return total_hours
     
+def tickholiday(tick):
+    if tick :
+        return True
+    else:
+        return False

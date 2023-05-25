@@ -53,29 +53,30 @@ def calculate_total_hours(target_month , target_year):
     total_hours = {}
 
     for employee_schedule in read_csv_file('uploaded_schedule.csv'):
-        employee = employee_schedule['name']
-
+        
+        employee = employee_schedule[1]
+        if employee == 'name' :
+            continue
         if employee not in total_hours:
-            total_hours[employee] = []
+            total_hours[employee] = 0
     
         hours = 0
 
         for date in all_dates:
             day = date.strftime("%A")
 
-            if day == employee_schedule['day']:
+            if day == employee_schedule[0]:
                 if date == datetime.datetime.now() and date.month == current_month and date.year == current_year:
-                    start_time = datetime.datetime(date.year , date.month , date.day , float(employee_schedule['start']))
+                    start_time = datetime.datetime(date.year , date.month , date.day , float(employee_schedule[2]))
                     end_time = datetime.datetime.now()
                     diff = end_time - start_time
                     working_hours = diff.total_seconds() / 3600
                 else:
                     # 非當前日期，計算整天的工作時數
-                    working_hours = float(employee_schedule["end"]) - float(employee_schedule["start"])
+                    working_hours = float(employee_schedule[3]) - float(employee_schedule[2])
 
                 hours += working_hours
 
-        total_hours[employee].append(hours)
+        total_hours[employee] += hours
     return total_hours
 
-calculate_total_hours(5,2023)

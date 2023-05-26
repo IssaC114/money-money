@@ -4,71 +4,50 @@
 """
 
 import csv
-from oldemployee import Employee, EmployeeManagementSystem
 from schedule import scheduleclass
-import schedule
-
 
 class MoneyCalculator:
-
-    wages = 176 # 基本薪資
-    class_schedule = scheduleclass('uploaded_schedule.csv',5,2023)
+    def __init__(self,sch) :
+        self.sch = sch
+    wages = 176  # 基本薪資
+    
+    
 
     @classmethod
-    def set_wages(cls, wages):
-        if wages >= 176: # 設定後的基本薪資務必 >= 176  
-            cls.wages = wages
+    def set_wages(self,wages):
+        if wages >= 176: # 設定新的薪資
+            self.wages = wages
 
-    @staticmethod
-    def calculate_salary(holidays):
-        names = schedule.getverify() # 取得員工姓名
-        data = schedule.calculate_total_hours(5, 2023) # 取得月份/年份
-        total_salary = {} 
+    #@staticmethod
+    def calculate_salary(self):
+        names = self.sch.getverify()
+        wedata,hodata = self.sch.calculate_total_hours()
+        total_salary = {}
         for name in names:
-            totaltime = data.get(name, 0) 
-            total_salary[name] = int(totaltime * MoneyCalculator.wages) # 以整數計算薪資（工作總時數*基本薪資）
+            wetime = wedata.get(name, 0)
+            hotime = hodata.get(name , 0)
+            total_salary[name] = int(wetime * self.wages + hotime * self.wages * 2)  # 將本月總薪資轉為整數
         return total_salary
 
+    #@staticmethod
+    def export_salary_to_csv(self):
+        salaries = self.calculate_salary()
 
-    def count_working_days(schedule_file, holidays):
-        data = scheduleclass.read_csv_file()
-        working_days = 0
-        for row in data:
-            date = row[0]
-            if not MoneyCalculator.is_holiday(date, holidays):
-                working_days += 1
-        return working_days
-
-    def calculate_salary(employee, schedule_file, holidays):
-        data = scheduleclass.read_csv_file()
-        working_days = 0
-        work_hours = 0
-        for row in data:
-            if row[1] == employee.name:
-                date = row[0]
-                if not MoneyCalculator.is_holiday(date, holidays):
-                    working_days += 1
-                    work_hours += float(row[3]) - float(row[2]) # end-start
-        total_salary = work_hours * MoneyCalculator.wages
-        return total_salary, working_days, work_hours
-
-    def export_salary_to_csv(employees, schedule_file, holidays, output_file):
-
-    @staticmethod
-    def export_salary_to_csv(output_file):
-        holidays = schedule.read_csv_file('holidays.csv')[1:]  # holidays.csv檔有多行，跳過標題行開始讀取
-        salaries = MoneyCalculator.calculate_salary(holidays)
-
-        with open(output_file, 'w', newline='') as file:
+        with open('salary_output.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['姓名', '本月總薪資'])
             for name, total_salary in salaries.items():
-                if total_salary != 0: # 總薪資為0不寫入
-                   writer.writerow([name, total_salary])
+                if total_salary != 0:  # 排除本月總薪資為0的資料
+                    writer.writerow([name, total_salary])
 
-# 設定新的基本薪資
-MoneyCalculator.set_wages(200)  
-
+# 設定基本薪資  # 設定新的基本薪資
+sch = scheduleclass()
+sch.sethoildaybool(True)
+sch.settarget(5,2023)
+mm = MoneyCalculator(sch)
+mm.set_wages(200)
+mm.export_salary_to_csv()
 # 計算薪資並導出到CSV
-MoneyCalculator.export_salary_to_csv('salary_output.csv')
+#MoneyCalculator.export_salary_to_csv('salary_output.csv')
+
 

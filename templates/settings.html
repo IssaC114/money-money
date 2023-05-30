@@ -20,12 +20,13 @@
     </nav>
     </form>
 
-  <h5 class="font-weight-bold">設定國定假日是否上班(Y/N)</h5>
-  <div class="text-danger">
-    <p>Y:上班，當日薪資雙倍</p>
-    <p>N:不上班，當日不計算薪資</p>
-  </div>
+  
   <form method='POST' action="/admin/settings">
+    <h5 class="font-weight-bold">設定國定假日是否上班(Y/N)</h5>
+    <div class="text-danger">
+        <p>Y:上班，當日薪資雙倍</p>
+        <p>N:不上班，當日不計算薪資</p>
+    </div>   
     <nav class="nav flex-column">
       <input class="text" class="form -control" name="holiday" placeholder="請輸入Y/N來決定國定假日是否上班">
       <button type="submit" class="btn btn-primary">確定</button>

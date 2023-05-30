@@ -51,7 +51,8 @@ class MoneyCalculator:
               with open(
                     filename, 'w', newline='') as file:
                     writer = csv.writer(file)
-                    writer.writerow(['name','weekday hours','holiday hours', 'total salary for this month']) # 寫入CSV檔的 標題行
+                    # 寫入CSV檔的 標題行
+                    writer.writerow(['name','weekday hours','holiday hours', 'total salary for this month']) 
               for name, total_salary in salaries.items():
                   # 排除本月總薪資為0的資料
                   if total_salary != 0:  

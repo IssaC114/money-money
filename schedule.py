@@ -13,8 +13,8 @@ class scheduleclass:
         self.holidayboolean = False
 
     def settarget(self,target_month,target_year):
-        self.target_month = target_month
         self.target_year = target_year
+        self.target_month = target_month         
 
 
     def sethoildaybool(self , hoildaybool):
@@ -107,13 +107,4 @@ class scheduleclass:
             holiday_hours[employee] += holidayhours
 
         return weekday_hours , holiday_hours
-    
-
-sc = scheduleclass()
-sc.settarget(5,2023)
-sc.sethoildaybool(True)
-wehours , hohours = sc.calculate_total_hours()
-print(wehours)
-print(hohours)
-        
     

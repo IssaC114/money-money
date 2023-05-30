@@ -9,56 +9,60 @@ from flask import render_template, send_file
 from money import MoneyCalculator
 from schedule import scheduleclass
 import pandas as pd
-import schedule
 
 app = Flask(__name__)
 sch = scheduleclass()
 cal_money = MoneyCalculator(sch)
 
-#基本的帳密設定
+'''以下為登入登出相關函式'''
+#驗證帳密與登入者身分（管理員/工讀生）
 def validate_credentials(username, password):
-    if username == "test" and password == "1234":
-        return True
+    if username == "admin" and password == "1234":
+        return 'admin'
+    elif username in sch.getverify() and password == "5678":
+        return 'employee'
     else:
-        return False
-    
+        return None
+
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/login')
-# 獲取從表單提交的帳號和密碼後判斷是否正確
-# 再將其連結至admin介面
+#登陸頁面導向 -->admin/employee
 def login():
     user = request.cookies.get('username')
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if validate_credentials(username,password):
-            # 建立cookies
+        role = validate_credentials(username, password)
+        if role == 'admin':
             response = make_response(username)
-            response.set_cookie('username', 
-                                username)
-            return response
+            response.set_cookie('username', username)
+            return redirect('/admin')
+        elif role == 'employee':
+            response = make_response(username)
+            response.set_cookie('username', username)
+            return redirect('/employee')
         else:
             error = "帳號或密碼錯誤，請重新輸入"
-            return render_template('login.html',
+            return render_template('login.html', 
                                    error=error)
-        # GET 請求，顯示登入頁面
     elif user:
-        return render_template('admin.html')
+        if user == 'admin':
+            return redirect('/admin')
+        elif user == 'employee':
+            return redirect('/employee')
     return render_template('login.html')
 
-    
 @app.route('/logout', methods=['GET'])
+#登出作業
 def logout():
-    # 獲取要清除的 Cookie 名稱
-    cookie_name = request.cookies.get('username')
-    if cookie_name:
-        # 清除指定的 Cookie
-        response = make_response(redirect('/'))
-        response.delete_cookie(cookie_name)
-        return response
-    # 導向登出頁面或其他處理
+    # 檢查是否存在使用者的 cookies
+    if 'username' in request.cookies:
+        # 刪除 cookies
+        response = make_response('Logged out!')
+        response.set_cookie('username', '', expires=0)
+        return render_template('login.html')
     return redirect('/')
 
+'''以下為關於管理員的函式'''
 #admin介面
 @app.route("/admin",methods=['GET','POST'])
 def admin():
@@ -74,10 +78,12 @@ def settings():
             if wages >= 176:
                 cal_money.set_wages(wages)
                 success = f"薪資更新成功！目前薪資為{wages}"
-                return render_template('settings.html', success_1=success)
+                return render_template('settings.html', 
+                                       success_1=success)
             else:
                 error = "輸入值小於基本薪資，更新失敗"
-                return render_template('settings.html', error_1=error)
+                return render_template('settings.html', 
+                                       error_1=error)
         
         if 'holiday' in request.form:
         #設置國定假日上班模式
@@ -86,15 +92,18 @@ def settings():
                 work = True
                 sch.sethoildaybool(work)
                 success = "目前計算模式：國定假日上班"
-                return render_template('settings.html', success_2=success)
+                return render_template('settings.html', 
+                                       success_2=success)
             elif holiday.lower() == 'n':
                 work = False
                 sch.sethoildaybool(work)
                 success = "目前計算模式：國定假日不上班"
-                return render_template('settings.html', success_2=success)
+                return render_template('settings.html', 
+                                       success_2=success)
             else:
                 error = "錯誤：請輸入字母Y或N來進行調整"
-                return render_template('settings.html', error_2=error)
+                return render_template('settings.html', 
+                                       error_2=error)
 
     return render_template('settings.html')
 
@@ -136,10 +145,33 @@ def schedule_now():
     return send_file('uploaded_schedule.csv',
                      as_attachment=True)
     
-@app.route('/admin/arrange',methods=['GET'])
+@app.route('/admin/arrange',methods=['POST','GET'])
+def set_time():
+    if request.method == 'POST':
+        year = int(request.form['year'])
+        month = int(request.form['month'])
+        if month <=12 and month >=1:
+            sch.settarget(month,year)
+            success = f"設定成功!月份為{sch.target_month}年份為{sch.target_year}"
+            return render_template('export_total.html',
+                                   success=success)
+        else:
+            error = "月份輸入有誤，請重新輸入。"
+            return render_template('export_total.html',
+                                   error = error)
+    return render_template('export_total.html')
+
+@app.route('/admin/arrange/download',methods=['GET'])
 def download_wages_total():
-    return send_file(cal_money.export_salary_to_csv(),
-                     as_attachment=True)
+    filename = cal_money.export_salary_to_csv()
+    return send_file(filename,
+                as_attachment=True)
+
+    
+'''以下為關於員工的函式'''
+@app.route('/employee',methods=['GET','POST'])
+def employee():
+    return render_template('employee.html')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

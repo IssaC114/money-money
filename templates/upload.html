@@ -10,13 +10,13 @@
 {% include "header_ad.html" %}
 
 <form action="/admin/upload/download" method="GET">
-    <button type="submit">下載模板</button>
+    <button type="submit" class="btn btn-outline-success">下載模板</button>
     <p/>
 </form>
 
 <form action="/admin/upload" method="POST" enctype="multipart/form-data">
     <input type="file" name="file" accept=".csv">
-    <button type="submit">上傳</button>
+    <button type="submit" class="btn btn-outline-primary">上傳</button>
     <p class="text-success">{{success}}</p>
     <p class="text-danger">{{ error }}</p>
 </form>

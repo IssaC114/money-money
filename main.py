@@ -119,9 +119,10 @@ def upload_schedule():
             # 處理CSV文件，這裡只是讀取CSV文件的內容並返回給前端
             df = pd.read_csv('uploaded_schedule.csv')
             if not df.empty:
+                success = '上傳成功！'
                 return render_template('upload.html', 
                                        data=df.to_html(index=False), 
-                                       success=True)
+                                       success=success)
             else:
                 error = '上傳的CSV文件為空'
                 return render_template('upload.html', 

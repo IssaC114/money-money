@@ -1,5 +1,5 @@
-﻿day,name,start,end
-Tuesday,Frank,13.5,17
-Thursday,Frank,13.5,17
-Friday,Frank,9,12.5
-Sunday,Frank,13.5,17
+﻿day,start,end
+Tuesday,13.5,17
+Thursday,13.5,17
+Friday,9,12.5
+Sunday,13.5,17

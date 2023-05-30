@@ -35,10 +35,15 @@ class scheduleclass:
     def getschedule(self,name=None):
         sch = 'schedule.csv'
         with open(sch , 'w' , newline='')as file:
-            writer=csv.writer(file)
+            if name == None:
+                writer=csv.writer(['day','start','end'])
+            else:                    
+                writer=csv.writer(file)
             for row in self.totaldata:
-                if name is None or row[1]==name or row==self.totaldata[0]:
+                if name is None :
                     writer.writerow(row)
+                elif row[1]==name or row==self.totaldata[0]:
+                    writer.writerow([row[0] , row[2] , row[3]])
         return sch
     #用來帳密驗證    
     def getverify(self):

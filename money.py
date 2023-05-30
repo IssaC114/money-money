@@ -32,7 +32,7 @@ class MoneyCalculator:
     # 將取得資料輸出至CSV
     def export_salary_to_csv(self):
         salaries = self.calculate_salary() # 取得計算後的薪資資料
-        filename = 'salary_output.csv' # 定义文件路径和名称
+        filename = 'salary_output.csv' # 定義文件路徑和名稱
         with open(filename, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(['姓名', '本月總薪資']) # 寫入CSV檔的 標題行

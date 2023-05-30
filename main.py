@@ -3,7 +3,6 @@
 負責組員：周詠熙（主要架構與html撰寫）
 """
 
-import csv
 from flask import Flask, redirect
 from flask import make_response,request
 from flask import render_template, send_file
@@ -115,7 +114,8 @@ def upload_schedule():
             df = pd.read_csv('uploaded_schedule.csv')
             if not df.empty:
                 return render_template('upload.html', 
-                                       data=df.to_html(index=False), 
+                                       data=df.to_html
+                                       (index=False), 
                                        success=True)
             else:
                 error = '上傳的CSV文件為空'
@@ -142,7 +142,8 @@ def schedule_now():
     
 @app.route('/admin/arrange',methods=['GET'])
 def download_wages_total():
-    return send_file(cal_money.export_salary_to_csv(),as_attachment=True)
+    return send_file(cal_money.export_salary_to_csv(),
+                     as_attachment=True)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

@@ -44,7 +44,7 @@ class MoneyCalculator:
     
     def employee_salary(self,name):
         salaries = self.calculate_salary()
-        for employee , salary in salaries():
+        for employee , salary in salaries.items():
             if employee == name :
                 return salary
 

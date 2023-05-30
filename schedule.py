@@ -17,7 +17,7 @@ class scheduleclass:
         self.target_month = target_month         
 
 
-    def sethoildaybool(self , hoildaybool):
+    def sethoildaybool(self,hoildaybool):
         self.holidayboolean = hoildaybool
 
 
@@ -34,16 +34,19 @@ class scheduleclass:
     #如果參數有給名字就輸出此人的班表，沒有就輸出整份班表
     def getschedule(self,name=None):
         sch = 'schedule.csv'
-        with open(sch , 'w' , newline='')as file:
+        with open(sch,'w',newline='')as file:
             if name == None:
-                writer=csv.writer(['day','start','end'])
+                writer=csv.writer(['day','start',
+                                   'end'])
             else:                    
                 writer=csv.writer(file)
             for row in self.totaldata:
                 if name is None :
                     writer.writerow(row)
-                elif row[1]==name or row==self.totaldata[0]:
-                    writer.writerow([row[0] , row[2] , row[3]])
+                elif (row[1]==name 
+                        or row==self.totaldata[0]):
+                    writer.writerow([row[0],row[2],
+                                     row[3]])
         return sch
     #用來帳密驗證    
     def getverify(self):
@@ -57,18 +60,25 @@ class scheduleclass:
         current_year = datetime.datetime.now().year
 
         #取當月所有日期
-        first_day = datetime.datetime(self.target_year,self.target_month,1)
-        next_month = first_day.replace(day=28) + datetime.timedelta(days=4)
-        last_day = next_month - datetime.timedelta(days = 1)
-        all_dates = [first_day + datetime.timedelta(days=x) for x in range((last_day - first_day).days + 1)]
+        first_day = datetime.datetime(self.target_year,
+                                      self.target_month,
+                                      1)
+        next_month = (first_day.replace(day=28) 
+                      + datetime.timedelta(days=4))
+        last_day = (next_month 
+                    - datetime.timedelta(days = 1))
+        all_dates = [first_day 
+                     + datetime.timedelta(days=x) 
+                     for x in range((last_day - first_day).days + 1)]                     
 
         # 讀取國定假日資訊
         holidays = []
-        with open('holidays.csv', 'r') as file:
+        with open('holidays.csv','r') as file:
             reader = csv.reader(file)
             next(reader)  # 跳過標題列
             for row in reader:
-                holiday_date = datetime.datetime.strptime(row[0], "%Y-%m-%d").date()
+                holiday_date = datetime.datetime.strptime(
+                            row[0],"%Y-%m-%d").date()
                 holidays.append(holiday_date)
 
         #計算員工總時數
@@ -78,7 +88,7 @@ class scheduleclass:
             
             employee = employee_schedule[1]
             #跳過標題列
-            if employee == 'name' :
+            if employee == 'name':
                 continue
             
             if employee not in weekday_hours:
@@ -94,15 +104,21 @@ class scheduleclass:
 
                 if day == employee_schedule[0]:
                    
-                    if date == datetime.datetime.now() and date.month == current_month and date.year == current_year:
+                    if (date == datetime.datetime.now() 
+                            and date.month == current_month 
+                                and date.year == current_year):
                         # 若為當前日期，計算到目前時間的工作時數
-                        start_time = datetime.datetime(date.year , date.month , date.day , float(employee_schedule[2]))
+                        start_time = datetime.datetime(date.year,
+                                                       date.month,
+                                                       date.day,
+                                                       float(employee_schedule[2]))
                         end_time = datetime.datetime.now()
                         diff = end_time - start_time
                         working_hours = diff.total_seconds() / 3600
                     else:
                         # 非當前日期，計算整天的工作時數
-                        working_hours = float(employee_schedule[3]) - float(employee_schedule[2])
+                        working_hours = (float(employee_schedule[3]) 
+                                         - float(employee_schedule[2]))
 
                     if (date.date() in holidays) and (self.holidayboolean):
                         holidayhours += working_hours

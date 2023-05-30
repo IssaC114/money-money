@@ -31,15 +31,21 @@ class MoneyCalculator:
 
     # 將取得資料輸出至CSV
     def export_salary_to_csv(self):
+        wedata,hodata = self.sch.calculate_total_hours() # 取得本月工作總時數
         salaries = self.calculate_salary() # 取得計算後的薪資資料
         filename = 'salary_output.csv' # 定義文件路徑和名稱
         with open(filename, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(['姓名', '本月總薪資']) # 寫入CSV檔的 標題行
+            writer.writerow(['姓名','平日時數','假日時數', '本月總薪資']) # 寫入CSV檔的 標題行
             for name, total_salary in salaries.items():
                 if total_salary != 0:  # 排除本月總薪資為0的資料
-                    writer.writerow([name, total_salary])
+                    writer.writerow([name, wedata.get[name , 0] , hodata.get[name , 0],total_salary])
         return filename
 
+sch = scheduleclass()
+sch.settarget(5,2023)
+sch.sethoildaybool(True)
+mm = MoneyCalculator(sch)
+mm.export_salary_to_csv()
 
 

@@ -41,11 +41,12 @@ class MoneyCalculator:
                 if total_salary != 0:  # 排除本月總薪資為0的資料
                     writer.writerow([name, wedata.get(name , 0) , hodata.get(name , 0),total_salary])
         return filename
+    
+    def employee_salary(self,name):
+        salaries = self.calculate_salary()
+        for employee , salary in salaries():
+            if employee == name :
+                return salary
 
-sch = scheduleclass()
-sch.settarget(5,2023)
-sch.sethoildaybool(True)
-mm = MoneyCalculator(sch)
-mm.export_salary_to_csv()
 
 

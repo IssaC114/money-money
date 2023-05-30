@@ -6,43 +6,45 @@
 import csv
 from schedule import scheduleclass 
 
-class MoneyCalculator: # 計算薪資的類別
+
+class MoneyCalculator: 
     def __init__(self,sch) :
         self.sch = sch  # 初始化 MoneyCalculator 類別的物件，並傳入 scheduleclass 的實例
     wages = 176  # 基本薪資
 
     
     @classmethod
+    # 設定新的基本薪資
     def set_wages(self,wages):
-        if wages >= 176: # 設定新的薪資
+        if wages >= 176: 
             self.wages = wages
 
-    #@staticmethod
+    # 計算薪資
     def calculate_salary(self):
-        names = self.sch.getverify()
-        wedata,hodata = self.sch.calculate_total_hours()
+        names = self.sch.getverify() # 取得員工姓名
+        wedata,hodata = self.sch.calculate_total_hours() # 取得本月工作總時數
         total_salary = {}
         for name in names:
-            wetime = wedata.get(name, 0)
-            hotime = hodata.get(name , 0)
-            total_salary[name] = int(wetime * self.wages + hotime * self.wages * 2)  # 將本月總薪資轉為整數
+            wetime = wedata.get(name, 0) # 取得個別員工 普通時數
+            hotime = hodata.get(name , 0) # 取得個別員工 國定假日時數
+            total_salary[name] = int(wetime * self.wages + hotime * self.wages * 2)  # 以整數計本月總薪資
         return total_salary
 
-    #@staticmethod
+    # 將取得資料輸出至CSV
     def export_salary_to_csv(self):
-        salaries = self.calculate_salary()
+        salaries = self.calculate_salary() # 取得計算後的薪資資料
 
         with open('salary_output.csv', 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(['姓名', '本月總薪資'])
+            writer.writerow(['姓名', '本月總薪資']) # 寫入CSV檔的 標題行
             for name, total_salary in salaries.items():
                 if total_salary != 0:  # 排除本月總薪資為0的資料
                     writer.writerow([name, total_salary])
 
 
 sch = scheduleclass()
-sch.sethoildaybool(True)
-sch.settarget(5,2023)
+sch.sethoildaybool(True) # 設定是否考慮國定假日
+sch.settarget(5,2023) # 設定目標月份、年份
 mm = MoneyCalculator(sch)
 mm.set_wages(200) 
 mm.export_salary_to_csv()

@@ -39,7 +39,7 @@ def login():
         elif role == 'employee':
             response = make_response(username)
             response.set_cookie('username', username)
-            return redirect('/employee/{username}')
+            return redirect(f'/employee/{username}')
         else:
             error = "帳號或密碼錯誤，請重新輸入"
             return render_template('login.html', 
@@ -48,7 +48,7 @@ def login():
         if user == 'admin':
             return redirect('/admin')
         elif user == 'employee':
-            return redirect('/employee')
+            return redirect(f'/employee/{username}')
     return render_template('login.html')
 
 @app.route('/logout', methods=['GET'])
@@ -170,9 +170,21 @@ def download_wages_total():
     
 '''以下為關於員工的函式'''
 @app.route('/employee/<username>',methods=['GET','POST'])
-def employee():
-        
-    return render_template('employee.html')
+def employee(username):    
+    return render_template('employee.html',username=username)
 
+@app.route("/employee/<username>/schedule",methods=['GET'])
+def schedule_emp(username):
+    filename = sch.getschedule(username)
+    return send_file(filename,
+                     as_attachment=True)
+
+@app.route("/employee/<username>/schedule",methods=['POST','GET'])
+def wages(username):
+    wages = cal_money.employee_salary(username)
+    show_wages = f"本月薪資為：{wages}"
+    return render_template("employee.html",show_wages=show_wages)
+    
+    
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

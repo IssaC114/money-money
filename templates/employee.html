@@ -9,8 +9,10 @@
 </head>
 {% include "header_em.html" %}
 <nav class="nav flex-column">
-  <a class="nav-link" href="/employee/">查看班表</a>
-  
+  <a class="nav-link" href="/employee/<username>/schedule">查看班表</a>
+  <a class="nav-link" href="/employee/<username>/wages">查看薪資</a> 
+  <p>{{show_wages}}</p>
+
 </nav>
 
 </html>

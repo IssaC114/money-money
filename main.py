@@ -39,7 +39,7 @@ def login():
         elif role == 'employee':
             response = make_response(username)
             response.set_cookie('username', username)
-            return redirect('/employee')
+            return redirect('/employee/{username}')
         else:
             error = "帳號或密碼錯誤，請重新輸入"
             return render_template('login.html', 
@@ -169,8 +169,9 @@ def download_wages_total():
 
     
 '''以下為關於員工的函式'''
-@app.route('/employee',methods=['GET','POST'])
+@app.route('/employee/<username>',methods=['GET','POST'])
 def employee():
+        
     return render_template('employee.html')
 
 if __name__ == '__main__':

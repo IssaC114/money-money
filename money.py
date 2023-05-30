@@ -35,7 +35,8 @@ class MoneyCalculator:
                 wetime = wedata.get(name, 0) 
                 # 取得個別員工 國定假日時數
                 hotime = hodata.get(name , 0) 
-                total_salary[name] = int(wetime * self.wages + hotime * self.wages * 2)  # 以整數計本月總薪資
+                # 以整數計本月總薪資
+                total_salary[name] = int(wetime * self.wages + hotime * self.wages * 2)  
             return total_salary
 
     # 將取得資料輸出至CSV

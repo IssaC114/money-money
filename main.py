@@ -114,8 +114,7 @@ def upload_schedule():
             df = pd.read_csv('uploaded_schedule.csv')
             if not df.empty:
                 return render_template('upload.html', 
-                                       data=df.to_html
-                                       (index=False), 
+                                       data=df.to_html(index=False), 
                                        success=True)
             else:
                 error = '上傳的CSV文件為空'

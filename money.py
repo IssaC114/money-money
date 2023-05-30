@@ -36,10 +36,10 @@ class MoneyCalculator:
         filename = 'salary_output.csv' # 定義文件路徑和名稱
         with open(filename, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(['姓名','平日時數','假日時數', '本月總薪資']) # 寫入CSV檔的 標題行
+            writer.writerow(['name','weekday hours','holiday hours', 'total salary for this month']) # 寫入CSV檔的 標題行
             for name, total_salary in salaries.items():
                 if total_salary != 0:  # 排除本月總薪資為0的資料
-                    writer.writerow([name, wedata.get[name , 0] , hodata.get[name , 0],total_salary])
+                    writer.writerow([name, wedata.get(name , 0) , hodata.get(name , 0),total_salary])
         return filename
 
 sch = scheduleclass()

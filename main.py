@@ -58,7 +58,7 @@ def logout():
     if 'username' in request.cookies:
         # 刪除 cookies
         response = make_response('Logged out!')
-        response.set_cookie('username', '', expires=0)
+        response.delete_cookie('username', '', expires=0)
         return render_template('login.html')
     return redirect('/')
 
@@ -179,12 +179,24 @@ def schedule_emp(username):
     return send_file(filename,
                      as_attachment=True)
 
-@app.route("/employee/<username>/schedule",methods=['POST','GET'])
-def wages(username):
-    wages = cal_money.employee_salary(username)
-    show_wages = f"本月薪資為：{wages}"
-    return render_template("employee.html",show_wages=show_wages)
-    
+@app.route('/employee/<username>/wages',methods=['POST','GET'])
+def wages_person(username):
+    if request.method == 'POST':
+        year = int(request.form['year'])
+        month = int(request.form['month'])
+        if month <=12 and month >=1:
+            sch.settarget(month,year)
+            wages = cal_money.employee_salary(username)
+            success = f"{sch.target_year}年{sch.target_month}月的薪資為{wages}"
+            return render_template('export_person.html',
+                                   success=success,
+                                   username=username)
+        else:
+            error = "月份輸入有誤，請重新輸入。"
+            return render_template('export_person.html',
+                                   error = error,
+                                   username = username)
+    return render_template('export_person.html')
     
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5001,debug=True)

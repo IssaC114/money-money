@@ -1,6 +1,6 @@
 """ 
 目的：主函式撰、與html進行連接
-負責組員：周詠熙（主要架構與html撰寫）
+負責組員：周詠熙
 """
 
 from flask import Flask, redirect

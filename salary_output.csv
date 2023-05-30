@@ -1,14 +1,7 @@
 name,weekday hours,holiday hours,total salary for this month
-<<<<<<< HEAD
-Quinella,28.0,3.5,6160
-Megan,45.5,3.5,9240
-Luminous,45.5,0,8008
-Frank,59.5,0,10472
-Fannie,31.5,0,5544
-=======
 Quinella,31.5,0,5544
 Megan,49.0,0,8624
 Luminous,45.5,0,8008
-Frank,59.5,0,10472
+Frank,59.5,3.5,11704
 Fannie,31.5,0,5544
 >>>>>>> a1427ff84c24b6d8843f73bad92cf17059e641fb

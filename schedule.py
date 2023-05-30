@@ -33,12 +33,13 @@ class scheduleclass:
 
     #如果參數有給名字就輸出此人的班表，沒有就輸出整份班表
     def getschedule(self,name=None):
-        with open('schedule.csv' , 'w' , newline='')as file:
+        sch = 'schedule.csv'
+        with open(sch , 'w' , newline='')as file:
             writer=csv.writer(file)
             for row in self.totaldata:
                 if name is None or row[1]==name or row==self.totaldata[0]:
                     writer.writerow(row)
-
+        return sch
     #用來帳密驗證    
     def getverify(self):
         name=[row[1] for row in self.totaldata]

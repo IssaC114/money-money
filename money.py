@@ -64,12 +64,11 @@ class MoneyCalculator:
                                       hodata.get(name , 0),total_salary])
               return filename
     
+    # 查詢特定員工的薪資
     def employee_salary(
               self,name):
               salaries = self.calculate_salary()
               for employee , salary in salaries.items():
                   if employee == name :
                      return salary
-
-
 

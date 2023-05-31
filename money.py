@@ -10,7 +10,8 @@ from schedule import scheduleclass
 class MoneyCalculator: 
     def __init__(
             self,sch) :
-            # 初始化 MoneyCalculator 類別的物件，並傳入 scheduleclass 的實例
+            # 初始化 MoneyCalculator 類別的物件
+            # 並傳入 scheduleclass 的實例
             self.sch = sch  
             # 基本薪資
             self.wages = 176  
@@ -36,7 +37,8 @@ class MoneyCalculator:
                 # 取得個別員工 國定假日時數
                 hotime = hodata.get(name , 0) 
                 # 以整數計本月總薪資
-                total_salary[name] = int(wetime * self.wages + hotime * self.wages * 2)  
+                total_salary[name] = int(wetime * self.wages 
+                                         + hotime * self.wages * 2)  
             return total_salary
 
     # 將取得資料輸出至CSV
@@ -52,11 +54,14 @@ class MoneyCalculator:
                     filename, 'w', newline='') as file:
                     writer = csv.writer(file)
                     # 寫入CSV檔的 標題行
-                    writer.writerow(['name','weekday hours','holiday hours', 'total salary for this month']) 
+                    writer.writerow
+                    (['name','weekday hours',
+                      'holiday hours', 'total salary for this month']) 
               for name, total_salary in salaries.items():
                   # 排除本月總薪資為0的資料
                   if total_salary != 0:  
-                     writer.writerow([name, wedata.get(name , 0) , hodata.get(name , 0),total_salary])
+                     writer.writerow([name, wedata.get(name , 0) , 
+                                      hodata.get(name , 0),total_salary])
               return filename
     
     def employee_salary(

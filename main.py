@@ -109,6 +109,7 @@ def settings():
 
 
 @app.route('/admin/upload', methods=['GET', 'POST'])
+#上傳班表
 def upload_schedule():
     if request.method == 'POST':
         # 接收上傳的CSV文件
@@ -147,13 +148,14 @@ def schedule_now():
                      as_attachment=True)
     
 @app.route('/admin/arrange',methods=['POST','GET'])
+#設置需要計算的時間
 def set_time():
     if request.method == 'POST':
         year = int(request.form['year'])
         month = int(request.form['month'])
         if month <=12 and month >=1:
             sch.settarget(month,year)
-            success = f"設定成功!月份為{sch.target_month}年份為{sch.target_year}"
+            success = f"設定成功!將對{sch.target_year}年{sch.target_month}月的工讀金進行計算。"
             return render_template('export_total.html',
                                    success=success)
         else:
@@ -163,6 +165,7 @@ def set_time():
     return render_template('export_total.html')
 
 @app.route('/admin/arrange/download',methods=['GET'])
+#下載最終班表
 def download_wages_total():
     filename = cal_money.export_salary_to_csv()
     return send_file(filename,
@@ -171,16 +174,19 @@ def download_wages_total():
     
 '''以下為關於員工的函式'''
 @app.route('/employee/<username>',methods=['GET','POST'])
+#員工介面
 def employee(username):    
     return render_template('employee.html',username=username)
 
 @app.route("/employee/<username>/schedule",methods=['GET'])
+#員工個人的班表
 def schedule_emp(username):
     filename = sch.getschedule(username)
     return send_file(filename,
                      as_attachment=True)
 
 @app.route('/employee/<username>/wages',methods=['POST','GET'])
+#顯示員工的薪資
 def wages_person(username):
     if request.method == 'POST':
         year = int(request.form['year'])

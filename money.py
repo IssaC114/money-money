@@ -14,9 +14,8 @@ class MoneyCalculator:
             # 並傳入 scheduleclass 的實例
             self.sch = sch  
             # 基本薪資
-            self.wages = 176  
+            self.wages = 0  
     
-    @classmethod
     # 設定新的基本薪資
     def set_wages(
         self,wages) :

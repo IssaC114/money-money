@@ -153,13 +153,13 @@ def set_time():
     if request.method == 'POST':
         year = int(request.form['year'])
         month = int(request.form['month'])
-        if month <=12 and month >=1:
+        if month <=12 and month >=1 and year==2023 or 2024:
             sch.settarget(month,year)
             success = f"設定成功!將對{sch.target_year}年{sch.target_month}月的工讀金進行計算。"
             return render_template('export_total.html',
                                    success=success)
         else:
-            error = "月份輸入有誤，請重新輸入。"
+            error = "月份或年份輸入有誤，請重新輸入。"
             return render_template('export_total.html',
                                    error = error)
     return render_template('export_total.html')
@@ -191,7 +191,7 @@ def wages_person(username):
     if request.method == 'POST':
         year = int(request.form['year'])
         month = int(request.form['month'])
-        if month <=12 and month >=1:
+        if month <=12 and month >=1 and year == 2023 or 2024:
             sch.settarget(month,year)
             wages = cal_money.employee_salary(username)
             success = f"{sch.target_year}年{sch.target_month}月的薪資為{wages}"

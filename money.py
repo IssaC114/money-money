@@ -54,14 +54,13 @@ class MoneyCalculator:
                     filename, 'w', newline='') as file:
                     writer = csv.writer(file)
                     # 寫入CSV檔的 標題行
-                    writer.writerow
-                    (['name','weekday hours',
+                    writer.writerow(['name','weekday hours',
                       'holiday hours', 'total salary for this month']) 
-              for name, total_salary in salaries.items():
-                  # 排除本月總薪資為0的資料
-                  if total_salary != 0:  
-                     writer.writerow([name, wedata.get(name , 0) , 
-                                      hodata.get(name , 0),total_salary])
+                    for name, total_salary in salaries.items():
+                        # 排除本月總薪資為0的資料
+                        if total_salary != 0:  
+                            writer.writerow([name, wedata.get(name , 0) , 
+                                        hodata.get(name , 0),total_salary])
               return filename
     
     # 查詢特定員工的薪資

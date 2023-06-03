@@ -1,5 +1,4 @@
-day,start,end
-﻿day,name,start,end
+day,name,start,end
 Monday,Quinella,9,12.5
 Monday,Megan,13.5,17
 Tuesday,Luminous,9,12.5
@@ -14,3 +13,4 @@ Saturday,Fannie,9,12.5
 Saturday,Luminous,13.5,17
 Sunday,Luminous,9,12.5
 Sunday,Frank,13.5,17
+

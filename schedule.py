@@ -36,8 +36,8 @@ class scheduleclass:
         sch = 'schedule.csv'
         with open(sch,'w',newline='')as file:
             if name == None:
-                writer=csv.writer(['day','start',
-                                   'end'])
+                writer=csv.writer(file)
+                writer.writerow(['day','start','end'])
             else:                    
                 writer=csv.writer(file)
             for row in self.totaldata:

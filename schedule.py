@@ -6,13 +6,13 @@ import csv
 import datetime
 class scheduleclass:
 
-    def __init__(self):
-        self.totaldata = self.read_csv_file()
+    def __init__(self):        
         self.target_month = None
         self.target_year = None
         self.holidayboolean = False
 
     def settarget(self,target_month,target_year):
+        self.totaldata = self.read_csv_file()
         self.target_year = target_year
         self.target_month = target_month         
 

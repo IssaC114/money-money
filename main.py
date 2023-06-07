@@ -132,7 +132,6 @@ def upload_schedule():
             error = '上傳的文件必須是CSV格式'
             return render_template('upload.html', 
                                    error=error)
-
     return render_template('upload.html')
 
 @app.route('/admin/upload/download', methods=['GET'])

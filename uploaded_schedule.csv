@@ -1,4 +1,13 @@
 ﻿day,name,start,end
+<<<<<<< HEAD
+Tuesday,AA,9,12.5
+Tuesday,AA,13.5,17
+Wednesday,BB,13.5,17
+Thursday,AA,9,12.5
+Thursday,CC,13.5,17
+Friday,CC,9,12.5
+Friday,DD,9,12.5
+=======
 Monday,Rebecca,9,12.5
 Monday,Megan,13.5,17
 Tuesday,Daphnie,9,12.5
@@ -13,3 +22,4 @@ Saturday,Fannie,9,12.5
 Saturday,Daphnie,13.5,17
 Sunday,Daphnie,9,12.5
 Sunday,Frank,13.5,17
+>>>>>>> ef146887c4368090092638ee49c84c91fd4730c6

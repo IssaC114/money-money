@@ -1,6 +1,13 @@
 name,weekday hours,holiday hours,total salary for this month
+<<<<<<< HEAD
+AA,45.5,0,8008.0
+BB,14.0,0,2464.0
+CC,35.0,0,6160.0
+DD,17.5,0,3080.0
+=======
 Rebecca,31.5,0,5544.0
 Megan,49.0,0,8624.0
 Daphnie,42.0,0,7392.0
 Frank,63.0,0,11088.0
 Fannie,31.5,0,5544.0
+>>>>>>> ef146887c4368090092638ee49c84c91fd4730c6

@@ -1,25 +1,9 @@
 ﻿day,name,start,end
-<<<<<<< HEAD
-Tuesday,AA,9,12.5
-Tuesday,AA,13.5,17
-Wednesday,BB,13.5,17
-Thursday,AA,9,12.5
-Thursday,CC,13.5,17
-Friday,CC,9,12.5
-Friday,DD,9,12.5
-=======
-Monday,Rebecca,9,12.5
-Monday,Megan,13.5,17
-Tuesday,Daphnie,9,12.5
-Tuesday,Frank,13.5,17
-Wednesday,Fannie,9,12.5
-Wednesday,Megan,13.5,17
-Thursday,Rebecca,9,12.5
-Thursday,Frank,13.5,17
-Friday,Frank,9,12.5
-Friday,Megan,13.5,17
-Saturday,Fannie,9,12.5
-Saturday,Daphnie,13.5,17
-Sunday,Daphnie,9,12.5
-Sunday,Frank,13.5,17
->>>>>>> ef146887c4368090092638ee49c84c91fd4730c6
+Monday,Yulin,9,12.5
+Monday,Linda,13,17
+Tuesday,Linda,9,12.5
+Wensday,Linda,9,12.5
+Thursday,Yulin,9,12.5
+Thursday,YongXi,13,17
+Friday,Yulin,9,12.5
+Friday,YongXi,13,17

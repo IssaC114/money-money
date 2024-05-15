@@ -6,7 +6,8 @@ import csv
 import datetime
 class scheduleclass:
 
-    def __init__(self):        
+    def __init__(self): 
+        self.totaldata = self.read_csv_file()
         self.target_month = None
         self.target_year = None
         self.holidayboolean = False
